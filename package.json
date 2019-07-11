@@ -4,7 +4,13 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "npx nodemon --exec babel-node src/index.js"
+        "prebuild": "rm -rf dist",
+        "build": "npx babel src -d dist",
+        "predev": "npm install && npm audit fix",
+        "dev": "npx nodemon --exec babel-node src/index.js",
+        "preprod": "npm audit fix && npm run build ",
+        "prod": "node dist/index",
+        "start": "npm run \"$(test \"$NODE_ENV\" = \"production\" && echo prod || echo dev)\""
     },
     "repository": {
         "type": "git",
