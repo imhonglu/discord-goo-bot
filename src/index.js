@@ -24,7 +24,7 @@ client.on('message', async msg => {
         await commands[content](msg);
     } catch (e) {
         if (!(e instanceof TypeError)) {
-            throw e;
+            console.error('error', e.message);
         }
     }
 });
