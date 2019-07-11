@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 export const prefix = '!';
-export const { token } = require('./env');
+export const token = process.env.TOKEN;
 
 export const allowedChannelIdList = [
     // 구인/구직
