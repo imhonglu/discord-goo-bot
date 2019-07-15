@@ -1,10 +1,8 @@
+/* eslint-disable import/named */
 import Discord from 'discord.js';
-import {
-    prefix,
-    token,
-    allowedChannelIdList,
-} from './settings';
+import { token } from './settings';
 import commands from './commands';
+import { searchCommand } from './utils';
 
 const client = new Discord.Client();
 
@@ -15,13 +13,8 @@ client.on('ready', () => {
 client.on('message', async msg => {
     try {
         const { channel, content } = msg;
-        if (!allowedChannelIdList.includes(channel.id)) {
-            return;
-        }
-        if (!content.startsWith(prefix)) {
-            return;
-        }
-        await commands[content](msg);
+        const command = searchCommand(content, commands);
+        await command(msg);
     } catch (e) {
         if (!(e instanceof TypeError)) {
             console.error('error', e.message);

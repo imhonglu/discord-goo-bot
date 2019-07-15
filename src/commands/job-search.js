@@ -1,8 +1,11 @@
-const jobSearchKessage = '구직합니다.';
+const defaultMessage = '구직합니다.';
 
-export const keyword = '구직';
+export const keywordList = [
+    '구직',
+    'ㄱㅈ',
+];
 
 export default async msg => {
     const { nickname } = msg.member;
-    msg.channel.send(`@here ${nickname} ${jobSearchKessage}`);
+    msg.channel.send(`@here ${nickname} ${defaultMessage}`);
 };

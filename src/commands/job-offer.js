@@ -1,8 +1,11 @@
 const url = 'https://discord.gg';
 const limit = 3;
-const jobOfferMessage = '구인합니다.';
+const defaultMessage = '구인합니다.';
 
-export const keyword = '구인';
+export const keywordList = [
+    '구인',
+    'ㄱㅇ',
+];
 
 export default async msg => {
     const { voiceChannel } = msg.member;
@@ -10,6 +13,10 @@ export default async msg => {
         const invite = await voiceChannel.createInvite();
         const inviteUrl = `${url}/${invite.code}`;
         const offerNumber = limit - voiceChannel.members.size;
-        msg.channel.send(`\n@here ${inviteUrl} \n${offerNumber}명 ${jobOfferMessage} `);
+        const message = `
+            \n@here ${inviteUrl}
+            \n${offerNumber}명 ${defaultMessage}
+        `;
+        msg.channel.send(message);
     }
 };
