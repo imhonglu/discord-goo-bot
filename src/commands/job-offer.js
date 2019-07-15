@@ -9,7 +9,14 @@ export const keywordList = [
 
 export default async msg => {
     const { voiceChannel } = msg.member;
-    if (!voiceChannel || voiceChannel.members.size > limit) return;
+    if (!voiceChannel) {
+        msg.reply('음성 채널에 참가해주세요.');
+        return;
+    }
+    if (voiceChannel.members.size > limit) {
+        msg.reply('해당 채널의 구인이 마감되었습니다.');
+        return;
+    }
 
     const invite = await voiceChannel.createInvite();
     const inviteUrl = `${url}/${invite.code}`;
