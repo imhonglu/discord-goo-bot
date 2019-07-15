@@ -1,4 +1,4 @@
-import { DEBUG } from './settings';
+import { DEBUG } from '../settings';
 
 export const keywordList = [
     '에러',

@@ -22,8 +22,8 @@ client.on('message', async msg => {
         const command = searchCommand(content, commands);
         if (!command) return;
 
-        const isDebugChannel = channel.id === DEBUG_CHANNEL_ID;
         if (DEBUG) {
+            const isDebugChannel = channel.id === DEBUG_CHANNEL_ID;
             if (isDebugChannel) {
                 await command(msg);
             }
