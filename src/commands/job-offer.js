@@ -9,7 +9,7 @@ export const keywordList = [
 
 export default async msg => {
     const { voiceChannel } = msg.member;
-    if (voiceChannel.members.size > limit) return;
+    if (!voiceChannel || voiceChannel.members.size > limit) return;
 
     const invite = await voiceChannel.createInvite();
     const inviteUrl = `${url}/${invite.code}`;
