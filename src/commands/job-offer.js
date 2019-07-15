@@ -9,14 +9,14 @@ export const keywordList = [
 
 export default async msg => {
     const { voiceChannel } = msg.member;
-    if (voiceChannel.members.size < limit) {
-        const invite = await voiceChannel.createInvite();
-        const inviteUrl = `${url}/${invite.code}`;
-        const offerNumber = limit - voiceChannel.members.size;
-        const message = `
-            \n@here ${inviteUrl}
-            \n${offerNumber}명 ${defaultMessage}
-        `;
-        msg.channel.send(message);
-    }
+    if (voiceChannel.members.size > limit) return;
+
+    const invite = await voiceChannel.createInvite();
+    const inviteUrl = `${url}/${invite.code}`;
+    const offerNumber = limit - voiceChannel.members.size;
+    const message = `
+        \n@here ${inviteUrl}
+        \n${offerNumber}명 ${defaultMessage}
+    `;
+    msg.channel.send(message);
 };

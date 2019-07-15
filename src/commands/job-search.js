@@ -6,6 +6,8 @@ export const keywordList = [
 ];
 
 export default async msg => {
-    const { nickname } = msg.member;
-    msg.channel.send(`@here ${nickname} ${defaultMessage}`);
+    const { nickname, user } = msg.member;
+    const name = nickname || user.username;
+    const message = `@here ${name} ${defaultMessage}`;
+    msg.channel.send(message);
 };

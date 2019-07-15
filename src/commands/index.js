@@ -1,9 +1,9 @@
 /* eslint-disable import/named */
 import { requireDirectory } from '../utils';
-import { prefix } from '../settings';
+import { PREFIX } from '../settings';
 
 const commands = Object.values(requireDirectory()).reduce((acc, command) => {
-    const keywordList = command.keywordList.map(keyword => `${prefix}${keyword}`);
+    const keywordList = command.keywordList.map(keyword => `${PREFIX}${keyword}`);
     const result = [
         keywordList,
         command.default,
@@ -11,5 +11,5 @@ const commands = Object.values(requireDirectory()).reduce((acc, command) => {
     acc.push(result);
     return acc;
 }, []);
-console.log(commands);
+
 export default commands;
