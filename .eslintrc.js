@@ -7,7 +7,6 @@ module.exports = {
         'airbnb-base',
     ],
     rules: {
-        'linebreak-style': ['error', 'windows'],
         'indent': ['error', 4],
         'arrow-parens': ['error', 'as-needed'],
         'object-curly-newline': ['error', {

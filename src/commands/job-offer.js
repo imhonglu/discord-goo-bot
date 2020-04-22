@@ -1,6 +1,10 @@
-const url = 'https://discord.gg';
-const limit = 3;
-const defaultMessage = '구인합니다.';
+/* eslint-disable no-underscore-dangle */
+import memoryDB from '../memory-db';
+import JobOffer from '../models/job-offer';
+
+const URL = 'https://discord.gg';
+const DEFAULT_LIMIT = 4;
+const DEFAULT_MESSAGE = '구인합니다.';
 
 export const keywordList = [
     '구인',
@@ -8,9 +12,15 @@ export const keywordList = [
 ];
 
 export default async msg => {
+    const [limit = DEFAULT_LIMIT] = msg._args;
     const { voiceChannel } = msg.member;
+
     if (!voiceChannel) {
         msg.reply('음성 채널에 참가해주세요.');
+        return;
+    }
+    if (limit <= 1) {
+        msg.reply('해당 채널에서 모집하고자 하는 최대 인원수를 입력해주세요.');
         return;
     }
     if (voiceChannel.members.size > limit) {
@@ -19,11 +29,28 @@ export default async msg => {
     }
 
     const invite = await voiceChannel.createInvite();
-    const inviteUrl = `${url}/${invite.code}`;
+    const inviteURL = `${URL}/${invite.code}`;
     const offerNumber = limit - voiceChannel.members.size;
     const message = `
-        \n@here ${inviteUrl}
-        \n${offerNumber}명 ${defaultMessage}
+        \n@here ${offerNumber}명 ${DEFAULT_MESSAGE}(1시간 뒤 만료됩니다)
+        \n${inviteURL}
     `;
+
+    const [result] = memoryDB.findAll('JobSearch');
+    if (result) {
+        result.offer(id => {
+            msg._client.users.get(id).send(inviteURL);
+        });
+        return;
+    }
+
+    const data = new JobOffer({
+        memoryDB,
+        offerNumber,
+        inviteURL,
+        id: voiceChannel.id,
+    });
+
+    memoryDB.create(voiceChannel.id, data);
     msg.channel.send(message);
 };

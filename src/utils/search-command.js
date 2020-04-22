@@ -1,5 +1,14 @@
 /* eslint-disable no-restricted-syntax */
-import searchKeyword from './search-keyword';
+
+function searchKeyword(message, keywordList) {
+    for (const keyword of keywordList) {
+        const isMatched = message.includes(keyword);
+        if (isMatched) {
+            return true;
+        }
+    }
+    return false;
+}
 
 function searchCommand(message, commandList) {
     for (const [keywordList, command] of commandList) {
